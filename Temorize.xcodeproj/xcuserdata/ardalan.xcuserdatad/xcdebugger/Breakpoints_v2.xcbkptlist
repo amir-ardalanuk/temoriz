@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "B6E09854-726D-4AE8-8B8A-24F50DAC418D"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5E823621-ED4D-4687-BF46-EC56D1C7F9B7"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Temorize/Network/RequestManagerProtocol.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "perform(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "5E823621-ED4D-4687-BF46-EC56D1C7F9B7 - 7a356ef01bd89b4f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Temorize.RequestManager.perform&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(Temorize.RequestProtocol) async throws -&gt; &#x3c4;_0_0"
+                  moduleName = "Temorize"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ardalan/Documents/Temorize/Temorize/Network/RequestManagerProtocol.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "460">
+               </Location>
+               <Location
+                  uuid = "5E823621-ED4D-4687-BF46-EC56D1C7F9B7 - 984855ce4ecb7d30"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for Temorize.RequestManager.perform&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(Temorize.RequestProtocol) async throws -&gt; &#x3c4;_0_0"
+                  moduleName = "Temorize"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ardalan/Documents/Temorize/Temorize/Network/RequestManagerProtocol.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "188">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "61CDB309-8FE5-4288-B013-6C3728B5A06B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Temorize/Network/RequestManagerProtocol.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "perform(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "61CDB309-8FE5-4288-B013-6C3728B5A06B - 7a356ef01bd89bc3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Temorize.RequestManager.perform&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(Temorize.RequestProtocol) async throws -&gt; &#x3c4;_0_0"
+                  moduleName = "Temorize"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ardalan/Documents/Temorize/Temorize/Network/RequestManagerProtocol.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "1128">
+               </Location>
+               <Location
+                  uuid = "61CDB309-8FE5-4288-B013-6C3728B5A06B - 984855ce4ecb7dbc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for Temorize.RequestManager.perform&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(Temorize.RequestProtocol) async throws -&gt; &#x3c4;_0_0"
+                  moduleName = "Temorize"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ardalan/Documents/Temorize/Temorize/Network/RequestManagerProtocol.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "948">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "152480BB-1F27-4BA5-8545-4D2CC6073332"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Temorize/Presentation/HomeScreenViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
+            landmarkName = "translateQuery(query:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "152480BB-1F27-4BA5-8545-4D2CC6073332 - 76a875e3004563f4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(11) suspend resume partial function for closure #2 @Sendable () async -&gt; () in Temorize.HomeViewModel.translateQuery(query: Swift.String) -&gt; ()"
+                  moduleName = "Temorize"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ardalan/Documents/Temorize/Temorize/Presentation/HomeScreenViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "132">
+               </Location>
+               <Location
+                  uuid = "152480BB-1F27-4BA5-8545-4D2CC6073332 - c5d869c27cc97a47"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (inout Temorize.Home.State) -&gt; () in closure #2 @Sendable () async -&gt; () in Temorize.HomeViewModel.translateQuery(query: Swift.String) -&gt; ()"
+                  moduleName = "Temorize"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ardalan/Documents/Temorize/Temorize/Presentation/HomeScreenViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "44">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "842A798E-4D2B-4BC5-9F14-6C105DFB2B42"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Temorize/Network/RequestManagerProtocol.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "perform(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "842A798E-4D2B-4BC5-9F14-6C105DFB2B42 - 7a356ef01bd89c8d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Temorize.RequestManager.perform&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(Temorize.RequestProtocol) async throws -&gt; &#x3c4;_0_0"
+                  moduleName = "Temorize"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ardalan/Documents/Temorize/Temorize/Network/RequestManagerProtocol.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "30"
+                  endingLineNumber = "30"
+                  offsetFromSymbolStart = "252">
+               </Location>
+               <Location
+                  uuid = "842A798E-4D2B-4BC5-9F14-6C105DFB2B42 - 7a356ef01bd89c8d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Temorize.RequestManager.perform&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(Temorize.RequestProtocol) async throws -&gt; &#x3c4;_0_0"
+                  moduleName = "Temorize"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ardalan/Documents/Temorize/Temorize/Network/RequestManagerProtocol.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "30"
+                  endingLineNumber = "30"
+                  offsetFromSymbolStart = "360">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
