@@ -87,6 +87,7 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         let service = PresentationTranslateServices()
-        return HomeView(viewModel: HomeViewModel(definitionUsecase: service, translateUsecase: service))
+        let local = WordPersistance(databseManager: DatabaseManager())
+        return HomeView(viewModel: HomeViewModel(definitionUsecase: service, translateUsecase: service, wordPersistingUsecases: local))
     }
 }

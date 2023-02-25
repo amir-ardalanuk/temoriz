@@ -18,12 +18,15 @@ enum Home {
     struct Configuration {
         let definitionUsecase: WordDefinitionUsecases
         let translateUsecase: TranslateUsecase
+        let wordPersistingUsecases: WordPersistingUsecases
     }
     
     struct State: StateProtocol {
         var query: String?
         var translate: Loadable<TranslateList>
         var definition: Loadable<DefinitionList>
+        
+        var hasBookmarkButton: Bool { translate.value != nil }
     }
     
     enum Destination {
@@ -32,6 +35,7 @@ enum Home {
     
     enum Action {
         case query(String)
+        case toggle
     }
 }
 extension Home: HomeModule {
@@ -39,7 +43,8 @@ extension Home: HomeModule {
         HomeView(
             viewModel: HomeViewModel(
                 definitionUsecase: configuration.definitionUsecase,
-                translateUsecase: configuration.translateUsecase)
+                translateUsecase: configuration.translateUsecase,
+                wordPersistingUsecases: configuration.wordPersistingUsecases)
         )
     }
 }
@@ -55,14 +60,17 @@ final class HomeViewModel: StatefulViewModel {
     private let definitionUsecase: WordDefinitionUsecases
     private let translateUsecase: TranslateUsecase
     private var currentTask: Task<Void, Error>?
+    private var wordPersistingUsecases: WordPersistingUsecases
     private var translateQuery = PassthroughSubject<String, Never>()
     private var cancellables = Set<AnyCancellable>()
     init(definitionUsecase: WordDefinitionUsecases,
-         translateUsecase: TranslateUsecase) {
+         translateUsecase: TranslateUsecase,
+         wordPersistingUsecases: WordPersistingUsecases
+    ) {
         self.stateSubject = .init(.init(translate: .notRequested, definition: .notRequested))
         self.definitionUsecase = definitionUsecase
         self.translateUsecase = translateUsecase
-        
+        self.wordPersistingUsecases = wordPersistingUsecases
         translateQuery.debounce(for: 1.0, scheduler: DispatchQueue.main).sink { [weak self] value in
             self?.translateQuery(query: value)
         }.store(in: &cancellables)
@@ -75,10 +83,25 @@ final class HomeViewModel: StatefulViewModel {
                 $0.query = value
             }
             translateQuery.send(value)
+        case .toggle:
+            toggle()
         }
     }
     
-    
+    private func toggle() {
+        do {
+            guard let word = state.query, let translate = state.translate.value else { return }
+            if let _ = try? wordPersistingUsecases.retrive(word: word) {
+                try wordPersistingUsecases.delete(word: word)
+            } else {
+                let definition = state.definition.value
+                try wordPersistingUsecases.save(word: .init(word: word, date: .init(), translate: translate, definition: definition))
+            }
+        } catch {
+            print(error)
+        }
+        
+    }
     private func translateQuery(query: String) {
         stateSubject.value.update { $0.translate = .isLoading(last: nil)}
         currentTask?.cancel()

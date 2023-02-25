@@ -33,6 +33,9 @@
 		DD1C5AC62995384F009F005C /* FeatureModules.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1C5AC52995384F009F005C /* FeatureModules.swift */; };
 		DD1C5AC829953875009F005C /* DependecyLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1C5AC729953875009F005C /* DependecyLocator.swift */; };
 		DD1C5ACA299550F3009F005C /* ReactiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1C5AC9299550F2009F005C /* ReactiveView.swift */; };
+		DD7945DF29AAA11E009C3AE5 /* RemmeberListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7945DE29AAA11E009C3AE5 /* RemmeberListViewModel.swift */; };
+		DD7945E129AAA67A009C3AE5 /* RemmemberListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7945E029AAA67A009C3AE5 /* RemmemberListView.swift */; };
+		DD7945E329AAAFFC009C3AE5 /* RemmemberRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7945E229AAAFFC009C3AE5 /* RemmemberRowView.swift */; };
 		DD7DC2B9299D3A1F0036BBC4 /* Persistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7DC2B8299D3A1F0036BBC4 /* Persistance.swift */; };
 		DD7DC2BC299D3B9A0036BBC4 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = DD7DC2BB299D3B9A0036BBC4 /* Realm */; };
 		DD7DC2BE299D3B9A0036BBC4 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DD7DC2BD299D3B9A0036BBC4 /* RealmSwift */; };
@@ -70,6 +73,9 @@
 		DD1C5AC52995384F009F005C /* FeatureModules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureModules.swift; sourceTree = "<group>"; };
 		DD1C5AC729953875009F005C /* DependecyLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependecyLocator.swift; sourceTree = "<group>"; };
 		DD1C5AC9299550F2009F005C /* ReactiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveView.swift; sourceTree = "<group>"; };
+		DD7945DE29AAA11E009C3AE5 /* RemmeberListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemmeberListViewModel.swift; sourceTree = "<group>"; };
+		DD7945E029AAA67A009C3AE5 /* RemmemberListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemmemberListView.swift; sourceTree = "<group>"; };
+		DD7945E229AAAFFC009C3AE5 /* RemmemberRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemmemberRowView.swift; sourceTree = "<group>"; };
 		DD7DC2B8299D3A1F0036BBC4 /* Persistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistance.swift; sourceTree = "<group>"; };
 		DD7DC2BF299D3C580036BBC4 /* TranslateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateObject.swift; sourceTree = "<group>"; };
 		DD7DC2C1299D3EC70036BBC4 /* WordPersistingUsecases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPersistingUsecases.swift; sourceTree = "<group>"; };
@@ -194,6 +200,7 @@
 		DD1C5AB829952E34009F005C /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				DD7945DC29AA9BF4009C3AE5 /* RemmemberList */,
 				DD1C5AC2299533F9009F005C /* AppDI */,
 				DD1C5ABD29952E84009F005C /* Utils */,
 				DD1C5AB929952E44009F005C /* HomeScreenView.swift */,
@@ -220,6 +227,16 @@
 				DD1C5AC729953875009F005C /* DependecyLocator.swift */,
 			);
 			path = AppDI;
+			sourceTree = "<group>";
+		};
+		DD7945DC29AA9BF4009C3AE5 /* RemmemberList */ = {
+			isa = PBXGroup;
+			children = (
+				DD7945DE29AAA11E009C3AE5 /* RemmeberListViewModel.swift */,
+				DD7945E029AAA67A009C3AE5 /* RemmemberListView.swift */,
+				DD7945E229AAAFFC009C3AE5 /* RemmemberRowView.swift */,
+			);
+			path = RemmemberList;
 			sourceTree = "<group>";
 		};
 		DD7DC2B7299D3A100036BBC4 /* Storage */ = {
@@ -309,9 +326,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD7945E329AAAFFC009C3AE5 /* RemmemberRowView.swift in Sources */,
 				DD1C5AB429952B1F009F005C /* TranslateUsecase.swift in Sources */,
 				DD1C5ABC29952E4F009F005C /* HomeScreenViewModel.swift in Sources */,
 				DD1C5A982995089C009F005C /* RequestProtocol.swift in Sources */,
+				DD7945DF29AAA11E009C3AE5 /* RemmeberListViewModel.swift in Sources */,
 				DD1C5A9A29950907009F005C /* NetworkError.swift in Sources */,
 				DD1C5AAD2995235B009F005C /* GoogleTranslateResponse.swift in Sources */,
 				DD1C5AAF29952A23009F005C /* Translate.swift in Sources */,
@@ -328,6 +347,7 @@
 				DD1C5A8B29950607009F005C /* ContentView.swift in Sources */,
 				DD7DC2B9299D3A1F0036BBC4 /* Persistance.swift in Sources */,
 				DD1C5AB629952B5A009F005C /* WordDefinitionUsecases.swift in Sources */,
+				DD7945E129AAA67A009C3AE5 /* RemmemberListView.swift in Sources */,
 				DD1C5AA82995225E009F005C /* TransalteServicesProtocol.swift in Sources */,
 				DD1C5AA429950C77009F005C /* GoogleTranslateRequest.swift in Sources */,
 				DD1C5A8929950607009F005C /* TemorizeApp.swift in Sources */,

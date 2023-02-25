@@ -6,9 +6,12 @@
 //
 
 import Foundation
+import Combine
 
 protocol WordPersistingUsecases {
     func save(word: RemmeberedWord) throws
+    func retrive(word: String) -> RemmeberedWord?
     func delete(word: String) throws
-    func retriveAll() throws -> [RemmeberedWord] 
+    func retriveAll() throws -> [RemmeberedWord]
+    func publisher() throws -> AnyPublisher<[RemmeberedWord], Error>
 }

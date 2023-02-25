@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Combine
+
 protocol WordPersisting: WordPersistingUsecases { }
 
 final class WordPersistance: WordPersisting {
@@ -29,4 +31,17 @@ final class WordPersistance: WordPersisting {
         }
     }
     
+    func publisher() throws -> AnyPublisher<[RemmeberedWord], Error> {
+        let result = try databseManager.get(type: RemmeberWordObject.self, filter: nil)
+        return result.collectionPublisher.map {
+            $0.map {
+                $0.converToRemmeberWord
+            }
+        }.eraseToAnyPublisher()
+    }
+    
+    func retrive(word: String) -> RemmeberedWord? {
+        guard let word = try? databseManager.get(type: RemmeberWordObject.self, by: word) else { return nil }
+        return word.converToRemmeberWord
+    }
 }
