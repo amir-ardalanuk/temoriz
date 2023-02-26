@@ -37,22 +37,35 @@ struct HomeView: View {
 
     var body: some View {
         NavigationView {
-            VStack{
+            VStack {
                 HStack {
                     Button("Translate") {
                         tabStatus = .translate
                     }
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        tabStatus == .translate ? .blue.opacity(0.5):.white)
+                    .foregroundColor(.black)
 
                     Button("Defination") {
                         tabStatus = .defination
                     }
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        tabStatus == .defination ? .blue.opacity(0.5):.white)
+                    .foregroundColor(.black)
                 }
+                .padding([.horizontal, .top], 8)
 
                 if tabStatus == .translate {
                     VStack {
                         WithViewStore(viewStore: .init(publisher: viewModel.stateSubject.map(\.translate).eraseToAnyPublisher())) { value in
                             if let values = value?.value?.translates {
                                 translateView(values: values)
+                                    .padding(8)
+                                    .background(.blue.opacity(0.5))
                             } else {
                                 if let value = value?.error {
                                     Text(value.localizedDescription)
@@ -77,12 +90,16 @@ struct HomeView: View {
                         WithViewStore(viewStore: .init(publisher: viewModel.stateSubject.map(\.definition).eraseToAnyPublisher())) { value in
                             if let values = value?.value {
                                 definationView(values: values)
+                                    .padding(8)
+                                    .background(.blue.opacity(0.5))
                             } else {
                                 Text("No Definition")
                             }
                         }
                     }
                 }
+
+                Spacer()
             }
         }.navigationTitle("Find and Memorieze")
             .searchable(text: .init(get: {
@@ -96,24 +113,41 @@ struct HomeView: View {
     }
 
     private func translateView(values: [Translate]) -> some View {
-        List(values, id: \.text) { translate in
-            Section(header: Text("Translate")) {
-                Text(translate.text)
-            }.headerProminence(.increased)
-        }.listStyle(.grouped)
+        VStack(alignment: .leading) {
+            ForEach(values, id: \.self) { value in
+                HStack {
+                    Circle()
+                        .background(.black)
+                        .frame(width: 12, height: 12)
+                    Text(value.text)
+                        .font(.headline)
+                    Spacer()
+                }
+            }
+        }
     }
 
     private func definationView(values: DefinitionList) -> some View {
-        List(values, id: \.definition) { definition in
-            Section(header: Text(definition.definition)) {
-                VStack {
-                    Text(definition.partOfSpeech)
-                    Text(definition.derivation?.joined(separator: "\n") ?? "No Derivation")
-                    Text(definition.examples?.joined(separator: "\n") ?? "No Example")
-                    Text(definition.memberOf?.joined(separator: "\n") ?? "No Memeber")
+        ScrollView {
+            VStack(alignment: .leading) {
+                ForEach(values, id: \.self) { definition in
+                    VStack(alignment: .leading) {
+                        Text(definition.partOfSpeech)
+                            .font(.title)
+                        Divider()
+                        HStack {
+                            Circle()
+                                .background(.black)
+                                .frame(width: 12, height: 12)
+                            Text(definition.definition)
+                                .font(.headline)
+                            Spacer()
+                        }
+                    }
+                    .padding(.top, 8)
                 }
-            }.headerProminence(.increased)
-        }.listStyle(.grouped)
+            }
+        }
     }
 }
 
