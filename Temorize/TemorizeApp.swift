@@ -13,9 +13,7 @@ struct TemorizeApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                Home.create.build(configuration: .init(definitionUsecase: appDependencies.dependencies.wordUsecases, translateUsecase: appDependencies.dependencies.translateUsecase, wordPersistingUsecases: appDependencies.dependencies.wordPersisting))
-            }
+            Home.create.build(configuration: .init(definitionUsecase: appDependencies.dependencies.wordUsecases, translateUsecase: appDependencies.dependencies.translateUsecase, wordPersistingUsecases: appDependencies.dependencies.wordPersisting))
         }
     }
 }
