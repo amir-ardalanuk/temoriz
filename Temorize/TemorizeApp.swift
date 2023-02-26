@@ -13,7 +13,18 @@ struct TemorizeApp: App {
     
     var body: some Scene {
         WindowGroup {
-            Home.create.build(configuration: .init(definitionUsecase: appDependencies.dependencies.wordUsecases, translateUsecase: appDependencies.dependencies.translateUsecase, wordPersistingUsecases: appDependencies.dependencies.wordPersisting))
+            TabView {
+                Home.create.build(configuration: .init(definitionUsecase: appDependencies.dependencies.wordUsecases, translateUsecase: appDependencies.dependencies.translateUsecase, wordPersistingUsecases: appDependencies.dependencies.wordPersisting))
+                    .tabItem {
+                        Label("Translate", systemImage: "character.book.closed")
+                    }
+                
+                RemmemberList.create.build(configuration: .init(wordPersistingUsecases: appDependencies.dependencies.wordPersisting))
+                    .tabItem {
+                        Label("Remmember", systemImage: "bookmark")
+                    }
+            }
+            
         }
     }
 }

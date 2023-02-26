@@ -25,7 +25,7 @@ enum Home {
         var query: String?
         var translate: Loadable<TranslateList>
         var definition: Loadable<DefinitionList>
-        
+        var isBookmarked: Bool
         var hasBookmarkButton: Bool { translate.value != nil }
     }
     
@@ -67,11 +67,11 @@ final class HomeViewModel: StatefulViewModel {
          translateUsecase: TranslateUsecase,
          wordPersistingUsecases: WordPersistingUsecases
     ) {
-        self.stateSubject = .init(.init(translate: .notRequested, definition: .notRequested))
+        self.stateSubject = .init(.init(translate: .notRequested, definition: .notRequested, isBookmarked: false))
         self.definitionUsecase = definitionUsecase
         self.translateUsecase = translateUsecase
         self.wordPersistingUsecases = wordPersistingUsecases
-        translateQuery.debounce(for: 1.0, scheduler: DispatchQueue.main).sink { [weak self] value in
+        translateQuery.debounce(for: 1.0, scheduler: DispatchQueue.main).filter { !$0.isEmpty }.removeDuplicates().sink { [weak self] value in
             self?.translateQuery(query: value)
         }.store(in: &cancellables)
     }
@@ -91,17 +91,23 @@ final class HomeViewModel: StatefulViewModel {
     private func toggle() {
         do {
             guard let word = state.query, let translate = state.translate.value else { return }
-            if let _ = try? wordPersistingUsecases.retrive(word: word) {
+            if let _ = wordPersistingUsecases.retrive(word: word) {
                 try wordPersistingUsecases.delete(word: word)
+                stateSubject.value.update {
+                    $0.isBookmarked = false
+                }
             } else {
                 let definition = state.definition.value
                 try wordPersistingUsecases.save(word: .init(word: word, date: .init(), translate: translate, definition: definition))
+                stateSubject.value.update {
+                    $0.isBookmarked = true
+                }
             }
         } catch {
             print(error)
         }
-        
     }
+    
     private func translateQuery(query: String) {
         stateSubject.value.update { $0.translate = .isLoading(last: nil)}
         currentTask?.cancel()
@@ -114,6 +120,7 @@ final class HomeViewModel: StatefulViewModel {
                 let (response, definitionResponse) = try await (translateQuery, definitionQuery)
                 stateSubject.value.update {
                     $0.translate = .loaded(response)
+                    $0.isBookmarked = wordPersistingUsecases.retrive(word: query) != nil
                     if let definitionResponse {
                         $0.definition = .loaded(definitionResponse)
                     }

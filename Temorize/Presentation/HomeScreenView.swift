@@ -33,33 +33,24 @@ private enum TabState {
 struct HomeView: View {
     let viewModel: any HomeStatefulViewModel
     @State private var state: Home.State?
-    @State private var tabStatus = TabState.translate
+    @State private var tabSelected = 0
 
     var body: some View {
         NavigationView {
             VStack {
-                HStack {
-                    Button("Translate") {
-                        tabStatus = .translate
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(
-                        tabStatus == .translate ? .blue.opacity(0.5):.white)
-                    .foregroundColor(.black)
+                TextField("Saeed", text: .init(get: {
+                    state?.query ?? ""
+                }, set: { text in
+                    viewModel.handle(action: .query(text))
+                })).textFieldStyle(.roundedBorder).padding()
+                Picker("What is your favorite color?", selection: $tabSelected) {
+                               Text("Translate").tag(0)
+                               Text("Defination").tag(1)
+                           }
+                           .pickerStyle(.segmented)
+                           .padding()
 
-                    Button("Defination") {
-                        tabStatus = .defination
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(
-                        tabStatus == .defination ? .blue.opacity(0.5):.white)
-                    .foregroundColor(.black)
-                }
-                .padding([.horizontal, .top], 8)
-
-                if tabStatus == .translate {
+                if tabSelected == 0 {
                     VStack {
                         WithViewStore(viewStore: .init(publisher: viewModel.stateSubject.map(\.translate).eraseToAnyPublisher())) { value in
                             if let values = value?.value?.translates {
@@ -85,7 +76,7 @@ struct HomeView: View {
                     }
                 }
 
-                if tabStatus == .defination {
+                if tabSelected == 1 {
                     VStack {
                         WithViewStore(viewStore: .init(publisher: viewModel.stateSubject.map(\.definition).eraseToAnyPublisher())) { value in
                             if let values = value?.value {
@@ -100,16 +91,22 @@ struct HomeView: View {
                 }
 
                 Spacer()
-            }
-        }.navigationTitle("Find and Memorieze")
-            .searchable(text: .init(get: {
-                state?.query ?? ""
-            }, set: { text in
-                viewModel.handle(action: .query(text))
-            }), placement: .navigationBarDrawer(displayMode: .always)) {
-            }.onReceive(viewModel.stateSubject.eraseToAnyPublisher()) { state in
-                self.state = state
-            }
+            }.navigationTitle("Find and Memorieze")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar(content: {
+                    WithViewStore(viewStore: .init(publisher: viewModel.stateSubject.map(\.hasBookmarkButton).eraseToAnyPublisher())) { bool in
+                        if bool ?? false {
+                            Button {
+                                viewModel.handle(action: .toggle)
+                            } label: {
+                                Image(systemName: viewModel.state.isBookmarked ? "bookmark" : "bookmark.fill")
+                            }
+                        }
+                    }
+                }).onReceive(viewModel.stateSubject.eraseToAnyPublisher()) { state in
+                    self.state = state
+                }
+        }
     }
 
     private func translateView(values: [Translate]) -> some View {
