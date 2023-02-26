@@ -25,52 +25,81 @@ struct ActivityIndicator: UIViewRepresentable {
     
 }
 
+private enum TabState {
+    case translate
+    case defination
+}
+
 struct HomeView: View {
     let viewModel: any HomeStatefulViewModel
     @State private var state: Home.State?
+    @State private var tabStatus = TabState.translate
+
     var body: some View {
         NavigationView {
             VStack {
-                WithViewStore(viewStore: .init(publisher: viewModel.stateSubject.map(\.translate).eraseToAnyPublisher())) { value in
-                    if let values = value?.value?.translates {
-                        List(values, id: \.text) { translate in
-                            Section(header: Text("Translate")) {
-                                Text(translate.text)
-                            }.headerProminence(.increased)
-                        }.listStyle(.grouped)
-                    } else {
-                        if let value = value?.error {
-                            Text(value.localizedDescription)
-                        }
-                        if value?.isLoading ?? false {
-                            ActivityIndicator(isAnimating: true)
-                        } else {
-                            VStack(spacing: 12.0) {
-                                Image(systemName: "square.stack.3d.down.right.fill")
-                                    .font(.system(size: 72))
-                                Text("You can Search")
-                                
-                            }.padding()
-                        }
+                HStack {
+                    Button("Translate") {
+                        tabStatus = .translate
                     }
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        tabStatus == .translate ? .blue.opacity(0.5):.white)
+                    .foregroundColor(.black)
+
+                    Button("Defination") {
+                        tabStatus = .defination
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        tabStatus == .defination ? .blue.opacity(0.5):.white)
+                    .foregroundColor(.black)
                 }
-                
-                WithViewStore(viewStore: .init(publisher: viewModel.stateSubject.map(\.definition).eraseToAnyPublisher())) { value in
-                    if let values = value?.value {
-                        List(values, id: \.definition) { definition in
-                            Section(header: Text(definition.definition)) {
-                                VStack {
-                                    Text(definition.partOfSpeech)
-                                    Text(definition.derivation?.joined(separator: "\n") ?? "No Derivation")
-                                    Text(definition.examples?.joined(separator: "\n") ?? "No Example")
-                                    Text(definition.memberOf?.joined(separator: "\n") ?? "No Memeber")
+                .padding([.horizontal, .top], 8)
+
+                if tabStatus == .translate {
+                    VStack {
+                        WithViewStore(viewStore: .init(publisher: viewModel.stateSubject.map(\.translate).eraseToAnyPublisher())) { value in
+                            if let values = value?.value?.translates {
+                                translateView(values: values)
+                                    .padding(8)
+                                    .background(.blue.opacity(0.5))
+                            } else {
+                                if let value = value?.error {
+                                    Text(value.localizedDescription)
                                 }
-                            }.headerProminence(.increased)
-                        }.listStyle(.grouped)
-                    } else {
-                        Text("No Definition")
+                                if value?.isLoading ?? false {
+                                    ActivityIndicator(isAnimating: true)
+                                } else {
+                                    VStack(spacing: 12.0) {
+                                        Image(systemName: "square.stack.3d.down.right.fill")
+                                            .font(.system(size: 72))
+                                        Text("You can Search")
+
+                                    }.padding()
+                                }
+                            }
+                        }
                     }
                 }
+
+                if tabStatus == .defination {
+                    VStack {
+                        WithViewStore(viewStore: .init(publisher: viewModel.stateSubject.map(\.definition).eraseToAnyPublisher())) { value in
+                            if let values = value?.value {
+                                definationView(values: values)
+                                    .padding(8)
+                                    .background(.blue.opacity(0.5))
+                            } else {
+                                Text("No Definition")
+                            }
+                        }
+                    }
+                }
+
+                Spacer()
             }
         }.navigationTitle("Find and Memorieze")
             .searchable(text: .init(get: {
@@ -81,6 +110,44 @@ struct HomeView: View {
             }.onReceive(viewModel.stateSubject.eraseToAnyPublisher()) { state in
                 self.state = state
             }
+    }
+
+    private func translateView(values: [Translate]) -> some View {
+        VStack(alignment: .leading) {
+            ForEach(values, id: \.self) { value in
+                HStack {
+                    Circle()
+                        .background(.black)
+                        .frame(width: 12, height: 12)
+                    Text(value.text)
+                        .font(.headline)
+                    Spacer()
+                }
+            }
+        }
+    }
+
+    private func definationView(values: DefinitionList) -> some View {
+        ScrollView {
+            VStack(alignment: .leading) {
+                ForEach(values, id: \.self) { definition in
+                    VStack(alignment: .leading) {
+                        Text(definition.partOfSpeech)
+                            .font(.title)
+                        Divider()
+                        HStack {
+                            Circle()
+                                .background(.black)
+                                .frame(width: 12, height: 12)
+                            Text(definition.definition)
+                                .font(.headline)
+                            Spacer()
+                        }
+                    }
+                    .padding(.top, 8)
+                }
+            }
+        }
     }
 }
 
