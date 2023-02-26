@@ -25,50 +25,62 @@ struct ActivityIndicator: UIViewRepresentable {
     
 }
 
+private enum TabState {
+    case translate
+    case defination
+}
+
 struct HomeView: View {
     let viewModel: any HomeStatefulViewModel
     @State private var state: Home.State?
+    @State private var tabStatus = TabState.translate
+
     var body: some View {
         NavigationView {
-            VStack {
-                WithViewStore(viewStore: .init(publisher: viewModel.stateSubject.map(\.translate).eraseToAnyPublisher())) { value in
-                    if let values = value?.value?.translates {
-                        List(values, id: \.text) { translate in
-                            Section(header: Text("Translate")) {
-                                Text(translate.text)
-                            }.headerProminence(.increased)
-                        }.listStyle(.grouped)
-                    } else {
-                        if let value = value?.error {
-                            Text(value.localizedDescription)
-                        }
-                        if value?.isLoading ?? false {
-                            ActivityIndicator(isAnimating: true)
-                        } else {
-                            VStack(spacing: 12.0) {
-                                Image(systemName: "square.stack.3d.down.right.fill")
-                                    .font(.system(size: 72))
-                                Text("You can Search")
-                                
-                            }.padding()
+            VStack{
+                HStack {
+                    Button("Translate") {
+                        tabStatus = .translate
+                    }
+
+                    Button("Defination") {
+                        tabStatus = .defination
+                    }
+                }
+
+                if tabStatus == .translate {
+                    VStack {
+                        WithViewStore(viewStore: .init(publisher: viewModel.stateSubject.map(\.translate).eraseToAnyPublisher())) { value in
+                            if let values = value?.value?.translates {
+                                translateView(values: values)
+                            } else {
+                                if let value = value?.error {
+                                    Text(value.localizedDescription)
+                                }
+                                if value?.isLoading ?? false {
+                                    ActivityIndicator(isAnimating: true)
+                                } else {
+                                    VStack(spacing: 12.0) {
+                                        Image(systemName: "square.stack.3d.down.right.fill")
+                                            .font(.system(size: 72))
+                                        Text("You can Search")
+
+                                    }.padding()
+                                }
+                            }
                         }
                     }
                 }
-                
-                WithViewStore(viewStore: .init(publisher: viewModel.stateSubject.map(\.definition).eraseToAnyPublisher())) { value in
-                    if let values = value?.value {
-                        List(values, id: \.definition) { definition in
-                            Section(header: Text(definition.definition)) {
-                                VStack {
-                                    Text(definition.partOfSpeech)
-                                    Text(definition.derivation?.joined(separator: "\n") ?? "No Derivation")
-                                    Text(definition.examples?.joined(separator: "\n") ?? "No Example")
-                                    Text(definition.memberOf?.joined(separator: "\n") ?? "No Memeber")
-                                }
-                            }.headerProminence(.increased)
-                        }.listStyle(.grouped)
-                    } else {
-                        Text("No Definition")
+
+                if tabStatus == .defination {
+                    VStack {
+                        WithViewStore(viewStore: .init(publisher: viewModel.stateSubject.map(\.definition).eraseToAnyPublisher())) { value in
+                            if let values = value?.value {
+                                definationView(values: values)
+                            } else {
+                                Text("No Definition")
+                            }
+                        }
                     }
                 }
             }
@@ -81,6 +93,27 @@ struct HomeView: View {
             }.onReceive(viewModel.stateSubject.eraseToAnyPublisher()) { state in
                 self.state = state
             }
+    }
+
+    private func translateView(values: [Translate]) -> some View {
+        List(values, id: \.text) { translate in
+            Section(header: Text("Translate")) {
+                Text(translate.text)
+            }.headerProminence(.increased)
+        }.listStyle(.grouped)
+    }
+
+    private func definationView(values: DefinitionList) -> some View {
+        List(values, id: \.definition) { definition in
+            Section(header: Text(definition.definition)) {
+                VStack {
+                    Text(definition.partOfSpeech)
+                    Text(definition.derivation?.joined(separator: "\n") ?? "No Derivation")
+                    Text(definition.examples?.joined(separator: "\n") ?? "No Example")
+                    Text(definition.memberOf?.joined(separator: "\n") ?? "No Memeber")
+                }
+            }.headerProminence(.increased)
+        }.listStyle(.grouped)
     }
 }
 
