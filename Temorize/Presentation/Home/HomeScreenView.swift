@@ -24,6 +24,51 @@ struct ActivityIndicator: UIViewRepresentable {
     }
     
 }
+struct TestTextfield: UIViewRepresentable {
+    func makeCoordinator() -> Coordinator {
+        Coordinator(text: $text)
+    }
+    
+    @Binding var text: String
+    var keyType: UIKeyboardType
+    
+    public final class Coordinator: NSObject {
+        @Binding private var text: String
+        
+        public init(text: Binding<String>) {
+            self._text = text
+        }
+        
+        @objc func textChanged(_ sender: UITextField) {
+            guard let text = sender.text else { return }
+            self.text = text
+        }
+    }
+    func makeUIView(context: Context) -> UITextField {
+        let textField = UITextField()
+      textField.keyboardType = keyType
+        let bar = UIToolbar()
+        let action = UIAction.captureTextFromCamera(responder: textField, identifier: nil)
+        let ocr = UIBarButtonItem(title: "OCR", image: .init(systemName: ""), primaryAction: action, menu: nil)
+        bar.items = [ocr]
+        bar.sizeToFit()
+        textField.inputAccessoryView = bar
+        textField.addTarget(context.coordinator, action: #selector(context.coordinator.textChanged), for: .editingChanged)
+        return textField
+    }
+    
+    func updateUIView(_ uiView: UITextField, context: Context) {
+        uiView.text = text
+    }
+    
+}
+
+extension  UITextField{
+    @objc func doneButtonTapped(button:UIBarButtonItem) -> Void {
+       self.resignFirstResponder()
+    }
+
+}
 
 private enum TabState {
     case translate
@@ -38,59 +83,35 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             VStack {
-                TextField("Saeed", text: .init(get: {
-                    state?.query ?? ""
-                }, set: { text in
-                    viewModel.handle(action: .query(text))
-                })).textFieldStyle(.roundedBorder).padding()
-                Picker("What is your favorite color?", selection: $tabSelected) {
-                               Text("Translate").tag(0)
-                               Text("Defination").tag(1)
-                           }
-                           .pickerStyle(.segmented)
-                           .padding()
+                TestTextfield(text: .init(get: {
+                                        state?.query ?? ""
+                                    }, set: { text in
+                                        viewModel.handle(action: .query(text))
+                                    }), keyType: UIKeyboardType.default)
+                .padding()
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 45)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8.0)
+                        .stroke(Color(uiColor: .lightGray), lineWidth: 1))
+                .padding()
 
-                if tabSelected == 0 {
-                    VStack {
-                        WithViewStore(viewStore: .init(publisher: viewModel.stateSubject.map(\.translate).eraseToAnyPublisher())) { value in
-                            if let values = value?.value?.translates {
-                                translateView(values: values)
-                                    .padding(8)
-                                    .background(.blue.opacity(0.5))
-                            } else {
-                                if let value = value?.error {
-                                    Text(value.localizedDescription)
-                                }
-                                if value?.isLoading ?? false {
-                                    ActivityIndicator(isAnimating: true)
-                                } else {
-                                    VStack(spacing: 12.0) {
-                                        Image(systemName: "square.stack.3d.down.right.fill")
-                                            .font(.system(size: 72))
-                                        Text("You can Search")
-
-                                    }.padding()
-                                }
-                            }
+              
+                if state?.query?.isEmpty ?? true {
+                    HStack(alignment: .center, spacing: 8.0) {
+                        Image("empty")
+                    }
+                    Spacer()
+                } else {
+                    if state?.translate.isLoading ?? false || state?.translate.value == nil {
+                        ActivityIndicator(isAnimating: true)
+                    } else {
+                        WithViewStore(viewStore: .init(publisher: viewModel.stateSubject.eraseToAnyPublisher())) { state in
+                            TranslateView(translateList: state?.translate.value?.translates, definition: state?.definition.value)
                         }
                     }
+                    Spacer()
                 }
-
-                if tabSelected == 1 {
-                    VStack {
-                        WithViewStore(viewStore: .init(publisher: viewModel.stateSubject.map(\.definition).eraseToAnyPublisher())) { value in
-                            if let values = value?.value {
-                                definationView(values: values)
-                                    .padding(8)
-                                    .background(.blue.opacity(0.5))
-                            } else {
-                                Text("No Definition")
-                            }
-                        }
-                    }
-                }
-
-                Spacer()
+               
             }.navigationTitle("Find and Memorieze")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar(content: {
@@ -99,7 +120,7 @@ struct HomeView: View {
                             Button {
                                 viewModel.handle(action: .toggle)
                             } label: {
-                                Image(systemName: viewModel.state.isBookmarked ? "bookmark" : "bookmark.fill")
+                                Image(systemName: viewModel.state.isBookmarked ? "bookmark.fill" : "bookmark")
                             }
                         }
                     }

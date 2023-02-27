@@ -15,24 +15,22 @@ struct RemmemberRowListView: View {
         HStack {
             VStack(alignment: .leading, spacing: 0.8) {
                 HStack {
-                    Circle().fill(Color.orange).frame(width: 20, height: 20)
+                    Circle().fill(Color.orange).frame(width: 16, height: 16)
                     
                     Text(word.word)
                 }
-                .padding(.vertical, 8.0)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
                 HStack {
-                    Circle().fill(Color.clear).frame(width: 20, height: 20)
-                    
-                    Text(word.translate?.translates.first?.text ?? "-").padding(.vertical)
+                    Circle().fill(Color.clear).frame(width: 16, height: 16)
+                    Text(word.translate?.translates.first?.text ?? "-").padding(.vertical, 8.0)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
             }
-            .padding()
+            .padding(.horizontal)
+            Spacer()
         }
-        
     }
 }
 

@@ -27,7 +27,8 @@ enum RemmemberList {
     enum Destination {}
     
     enum Action {
-        case tap(item: RemmeberedWord)
+        case remove(item: RemmeberedWord)
+        case observeToDatabase
     }
 }
 
@@ -54,7 +55,20 @@ final class RemmemberListViewModel: StatefulViewModel {
     init(wordPersistingUsecases: WordPersistingUsecases) {
         self.stateSubject = .init(.init(list: []))
         self.wordPersistingUsecases = wordPersistingUsecases
-        
+    }
+    
+    func handle(action: Action) {
+        switch action {
+        case .observeToDatabase:
+            observerToDatabase()
+        case let .remove(item):
+            remove(item: item)
+        }
+    }
+    private func remove(item: RemmeberedWord) {
+       try? wordPersistingUsecases.delete(word: item.word)
+    }
+    private func observerToDatabase() {
         try? wordPersistingUsecases.publisher().sink { error in
             print(error)
         } receiveValue: { [weak self] list in
@@ -63,6 +77,4 @@ final class RemmemberListViewModel: StatefulViewModel {
             }
         }.store(in: &cancellables)
     }
-    
-    func handle(action: Action) {}
 }

@@ -36,6 +36,7 @@
 		DD7945DF29AAA11E009C3AE5 /* RemmeberListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7945DE29AAA11E009C3AE5 /* RemmeberListViewModel.swift */; };
 		DD7945E129AAA67A009C3AE5 /* RemmemberListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7945E029AAA67A009C3AE5 /* RemmemberListView.swift */; };
 		DD7945E329AAAFFC009C3AE5 /* RemmemberRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7945E229AAAFFC009C3AE5 /* RemmemberRowView.swift */; };
+		DD7945E629AD139A009C3AE5 /* TranslateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7945E529AD139A009C3AE5 /* TranslateView.swift */; };
 		DD7DC2B9299D3A1F0036BBC4 /* Persistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7DC2B8299D3A1F0036BBC4 /* Persistance.swift */; };
 		DD7DC2BC299D3B9A0036BBC4 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = DD7DC2BB299D3B9A0036BBC4 /* Realm */; };
 		DD7DC2BE299D3B9A0036BBC4 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DD7DC2BD299D3B9A0036BBC4 /* RealmSwift */; };
@@ -76,6 +77,7 @@
 		DD7945DE29AAA11E009C3AE5 /* RemmeberListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemmeberListViewModel.swift; sourceTree = "<group>"; };
 		DD7945E029AAA67A009C3AE5 /* RemmemberListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemmemberListView.swift; sourceTree = "<group>"; };
 		DD7945E229AAAFFC009C3AE5 /* RemmemberRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemmemberRowView.swift; sourceTree = "<group>"; };
+		DD7945E529AD139A009C3AE5 /* TranslateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateView.swift; sourceTree = "<group>"; };
 		DD7DC2B8299D3A1F0036BBC4 /* Persistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistance.swift; sourceTree = "<group>"; };
 		DD7DC2BF299D3C580036BBC4 /* TranslateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateObject.swift; sourceTree = "<group>"; };
 		DD7DC2C1299D3EC70036BBC4 /* WordPersistingUsecases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPersistingUsecases.swift; sourceTree = "<group>"; };
@@ -200,11 +202,11 @@
 		DD1C5AB829952E34009F005C /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				DD7945E429AD1384009C3AE5 /* Home */,
 				DD7945DC29AA9BF4009C3AE5 /* RemmemberList */,
 				DD1C5AC2299533F9009F005C /* AppDI */,
 				DD1C5ABD29952E84009F005C /* Utils */,
-				DD1C5AB929952E44009F005C /* HomeScreenView.swift */,
-				DD1C5ABB29952E4F009F005C /* HomeScreenViewModel.swift */,
+				DD7945E529AD139A009C3AE5 /* TranslateView.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -237,6 +239,15 @@
 				DD7945E229AAAFFC009C3AE5 /* RemmemberRowView.swift */,
 			);
 			path = RemmemberList;
+			sourceTree = "<group>";
+		};
+		DD7945E429AD1384009C3AE5 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				DD1C5AB929952E44009F005C /* HomeScreenView.swift */,
+				DD1C5ABB29952E4F009F005C /* HomeScreenViewModel.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		DD7DC2B7299D3A100036BBC4 /* Storage */ = {
@@ -336,6 +347,7 @@
 				DD1C5AAF29952A23009F005C /* Translate.swift in Sources */,
 				DD7DC2C6299D3FD20036BBC4 /* WordPersisting.swift in Sources */,
 				DD1C5AC429953402009F005C /* AppDI.swift in Sources */,
+				DD7945E629AD139A009C3AE5 /* TranslateView.swift in Sources */,
 				DD1C5AB129952A54009F005C /* Definition.swift in Sources */,
 				DD1C5AA62995151E009F005C /* WordsapiRequest.swift in Sources */,
 				DD1C5ABA29952E44009F005C /* HomeScreenView.swift in Sources */,
@@ -486,7 +498,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Temorize/Preview Content\"";
-				DEVELOPMENT_TEAM = BUZXKJMFX3;
+				DEVELOPMENT_TEAM = 37PRXS9M74;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -515,7 +527,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Temorize/Preview Content\"";
-				DEVELOPMENT_TEAM = BUZXKJMFX3;
+				DEVELOPMENT_TEAM = 37PRXS9M74;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
